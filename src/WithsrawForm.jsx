@@ -3,28 +3,39 @@ import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function WithdrawForm() {
-  const [amount, setAmount] = useState("");
-  const [motive, setMotive] = useState("");
-  const [category, setCategory] = useState("");
+  const [formData, setFormData] = useState({
+    amount: "",
+    motive: "",
+    category: "",
+  });
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
   const { accountId } = useParams();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: name === "amount" ? parseFloat(value) : value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`/transactions/withdraw/${accountId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: parseFloat(amount),
-          motive,
-          category,
-        }),
-      });
+      console.log("Data sent to backend:", formData); // Ajout du console.log
+
+      const response = await fetch(
+        `http://localhost:8080/transactions/withdraw/${accountId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         setIsSuccess(true);
@@ -56,8 +67,9 @@ function WithdrawForm() {
             type="number"
             className="form-control"
             id="amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            name="amount"
+            value={formData.amount}
+            onChange={handleChange}
             required
           />
         </div>
@@ -69,8 +81,9 @@ function WithdrawForm() {
             type="text"
             className="form-control"
             id="motive"
-            value={motive}
-            onChange={(e) => setMotive(e.target.value)}
+            name="motive"
+            value={formData.motive}
+            onChange={handleChange}
             required
           />
         </div>
@@ -80,8 +93,10 @@ function WithdrawForm() {
           </label>
           <select
             className="form-select"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
             required
           >
             <option value="">Select a category</option>

@@ -3,28 +3,38 @@ import { useNavigate, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function ImproviseForm() {
-  const [amount, setAmount] = useState("");
-  const [reason, setReason] = useState("");
-  const [category, setCategory] = useState("");
+  const [formData, setFormData] = useState({
+    amount: "",
+    reason: "",
+    category: "",
+  });
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
   const { accountId } = useParams();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: name === "amount" ? parseFloat(value) : value,
+    });
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`/transactions/deposit/${accountId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: parseFloat(amount),
-          reason,
-          category,
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:8080/transactions/deposit/${accountId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         setIsSuccess(true);
@@ -56,9 +66,9 @@ function ImproviseForm() {
             type="number"
             className="form-control"
             id="amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
+            name="amount"
+            value={formData.amount}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-3">
@@ -69,8 +79,9 @@ function ImproviseForm() {
             type="text"
             className="form-control"
             id="reason"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
+            name="reason"
+            value={formData.reason}
+            onChange={handleChange}
             required
           />
         </div>
@@ -80,8 +91,10 @@ function ImproviseForm() {
           </label>
           <select
             className="form-select"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
             required
           >
             <option value="">Select a category</option>

@@ -27,8 +27,7 @@ function TransactionList() {
   }, [accountId]);
 
   const formatDateTime = (dateTime) => {
-    // Utilisation de la fonction format de date-fns pour formater la date
-    return format(new Date(dateTime), "dd MMMM yyyy 'à' HH'h' : mm");
+    return format(new Date(dateTime), "dd MMMM yyyy 'at' HH'h' : mm");
   };
 
   return (

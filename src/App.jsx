@@ -9,6 +9,10 @@ import ImproviseForm from "./ImproviseForm";
 import TransactionList from "./TransactionList";
 import TransferForm from "./TransferForm";
 import WithdrawForm from "./WithsrawForm";
+import TransferList from "./TransferList";
+import TransferHistoryList from "./TransfeHistoryList";
+import AccountStatementFilter from "./AccountStatementFIlter";
+import BalanceHistory from "./BalanceHistory";
 
 function App() {
   return (
@@ -31,7 +35,26 @@ function App() {
             path="/transferts/transferProcess/:accountId"
             element={<TransferForm />}
           />
-          <Route path="/account/withdraw/:accountId" element={<WithdrawForm />} />
+          <Route
+            path="/account/withdraw/:accountId"
+            element={<WithdrawForm />}
+          />
+          <Route
+            path="/transfers/account/:accountId"
+            element={<TransferList />}
+          />
+          <Route
+            path="/transferHistories/account/:accountId"
+            element={<TransferHistoryList />}
+          />
+          <Route
+            path="/accountStatement/account/:accountId"
+            element={<AccountStatementFilter />}
+          />
+          <Route
+            path="/balanceHistories/account/:accountId"
+            element={<BalanceHistory />}
+          />
         </Routes>
       </Layout>
     </Router>

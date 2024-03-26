@@ -56,6 +56,7 @@ function AccountList() {
       <table className="table table-striped">
         <thead>
           <tr>
+            <th>Id</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Date of Birth</th>
@@ -74,10 +75,11 @@ function AccountList() {
               onClick={() => handleRowClick(account.id)}
               style={{ cursor: "pointer" }}
             >
+              <td>{account.id}</td>
               <td>{account.firstName}</td>
               <td>{account.lastName}</td>
               <td>{formatDateOfBirth(account.dateOfBirth)}</td>
-              <td>{account.principalBalance}</td>
+              <td>{account.principalBalance} Ar</td>
               <td>{account.monthlySalary} Ar</td>
               <td>{account.accountNumber}</td>
               <td>{account.overdraftEnabled ? "Yes" : "No"}</td>

@@ -74,7 +74,23 @@ function AccountDetails() {
   };
 
   const handleWithdrawClick = () => {
-    navigate(`/account/withdraw/${accountId}`)
+    navigate(`/account/withdraw/${accountId}`);
+  };
+
+  const handleTransfersClick = () => {
+    navigate(`/transfers/account/${accountId}`);
+  };
+
+  const handleTransferHistoryClick = () => {
+    navigate(`/transferHistories/account/${accountId}`);
+  };
+
+  const handleAccountStatementClick = () => {
+    navigate(`/accountStatement/account/${accountId}`);
+  };
+
+  const handleBalanceHistoryClick = () => {
+    navigate(`/balanceHistories/account/${accountId}`);
   };
 
   if (!account) {
@@ -95,7 +111,7 @@ function AccountDetails() {
           <strong>Date of Birth:</strong> {account.dateOfBirth}
         </p>
         <p>
-          <strong>Principal Balance:</strong> {account.principalBalance}
+          <strong>Principal Balance:</strong> {account.principalBalance} Ar
         </p>
         <p>
           <strong>Monthly Salary:</strong> {account.monthlySalary} Ar
@@ -115,10 +131,7 @@ function AccountDetails() {
         <button className="btn btn-primary m-2" onClick={handleImproviseClick}>
           Improvise
         </button>
-        <button
-          className="btn btn-primary m-2"
-          onClick={handleWithdrawClick}
-        >
+        <button className="btn btn-primary m-2" onClick={handleWithdrawClick}>
           Withdraw
         </button>
         <button
@@ -132,6 +145,27 @@ function AccountDetails() {
           onClick={handleMakeTransferClick}
         >
           Make Transfer
+        </button>
+        <button className="btn btn-primary m-2" onClick={handleTransfersClick}>
+          Your transfer in progress
+        </button>
+        <button
+          className="btn btn-primary m-2"
+          onClick={handleTransferHistoryClick}
+        >
+          view your transfer history
+        </button>
+        <button
+          className="btn btn-primary m-2"
+          onClick={handleAccountStatementClick}
+        >
+          Make AccountStatement
+        </button>
+        <button
+          className="btn btn-primary m-2"
+          onClick={handleBalanceHistoryClick}
+        >
+          View your Balance History
         </button>
         <button
           className="btn btn-success"

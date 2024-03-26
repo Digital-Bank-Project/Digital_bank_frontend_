@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,6 +14,8 @@ function TransferForm() {
     time: format(new Date(), "HH:mm"),
     label: "",
   });
+  const [isTransferSuccess, setIsTransferSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,17 +49,26 @@ function TransferForm() {
         throw new Error("Failed to submit transfer data");
       }
 
+      setIsTransferSuccess(true);
+
+      setTimeout(() => {
+        navigate(`/list-accounts`);
+      }, 3000);
+
       console.log("Transfer data submitted successfully");
-      // Gérez ici la logique de succès de la soumission
     } catch (error) {
       console.error("Error submitting transfer data:", error);
-      // Gérez ici la logique d'erreur de la soumission
     }
   };
 
   return (
     <div className="container mt-3">
       <h2>Transfer Funds</h2>
+      {isTransferSuccess && (
+        <div className="alert alert-success" role="alert">
+          Transfer successful!
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Recipient Account ID</label>
